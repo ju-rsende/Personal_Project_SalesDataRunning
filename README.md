@@ -2,28 +2,28 @@
 
 A comprehensive sales data analytics platform built with **Django** and **Streamlit**, featuring interactive dashboards, REST APIs, and admin panel for business intelligence.
 
-## 🚀 Features
+## Features
 
-### 📈 Interactive Dashboard (Streamlit)
+### Interactive Dashboard (Streamlit)
 - **Real-time Analytics** - Live data visualization
 - **Interactive Charts** - Bar charts, pie charts, comparison graphs
 - **Key Metrics** - Revenue, costs, product performance
 - **Responsive Design** - Works on desktop and mobile
 - **Auto-refresh** - Real-time data updates
 
-### 🔧 Admin Panel (Django)
+### Admin Panel (Django)
 - **Data Management** - Add, edit, delete sales records
 - **User Authentication** - Secure admin access
 - **Search & Filter** - Advanced data filtering
 - **Bulk Operations** - Import/export capabilities
 
-### 🌐 REST API (Django REST Framework)
+### REST API (Django REST Framework)
 - **RESTful Endpoints** - Clean API architecture
 - **JSON Responses** - Standard data format
 - **CORS Enabled** - Cross-origin requests
 - **Scalable** - Production-ready
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Sales Data Running Project/
@@ -43,7 +43,7 @@ Sales Data Running Project/
 └── db.sqlite3                # SQLite database
 ```
 
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
 - Python 3.9+
@@ -69,7 +69,7 @@ python3 manage.py createsuperuser
 python3 manage.py import_csv "path/to/your/sales_data.csv"
 ```
 
-## 🚀 Running the Platform
+## Running the Platform
 
 ### Option 1: Quick Start (Recommended)
 ```bash
@@ -85,7 +85,7 @@ python3 manage.py runserver 8000
 python3 -m streamlit run streamlit_dashboard.py --server.port 8501
 ```
 
-## 🌐 Access Points
+## Access Points
 
 | Service | URL | Description |
 |---------|-----|-------------|
@@ -93,7 +93,7 @@ python3 -m streamlit run streamlit_dashboard.py --server.port 8501
 | **Django Admin** | http://localhost:8000/admin | Data management panel |
 | **REST API** | http://localhost:8000/api | REST API endpoints |
 
-## 📊 Dashboard Features
+## Dashboard Features
 
 ### Key Metrics
 - Total sales records
@@ -112,7 +112,7 @@ python3 -m streamlit run streamlit_dashboard.py --server.port 8501
 - Client revenue breakdown
 - Product performance metrics
 
-## 🔌 API Endpoints
+## API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -132,16 +132,14 @@ python3 -m streamlit run streamlit_dashboard.py --server.port 8501
 }
 ```
 
-## 👤 Admin Credentials
+## Admin Credentials
 
 **Default Admin User:**
 - **Username:** `admin`
 - **Password:** `password`
 - **Email:** `admin@example.com`
 
-*Change password after first login for security*
-
-## 📋 Data Management
+## Data Management
 
 ### Import CSV Data
 ```bash
@@ -165,14 +163,14 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 ```
 
-## 🛡️ Security Features
+## Security Features
 
 - **CSRF Protection** - Django built-in security
 - **Admin Authentication** - Secure admin access
 - **CORS Headers** - Cross-origin request handling
 - **SQL Injection Protection** - ORM-based queries
 
-## 📦 Dependencies
+## Dependencies
 
 ### Core Frameworks
 - **Django 4.2+** - Web framework & API
@@ -188,7 +186,7 @@ python3 manage.py migrate
 ### Additional
 - **Django CORS Headers** - CORS handling
 
-## 🔧 Configuration
+## Configuration
 
 ### Django Settings
 - **Database:** SQLite (development)
@@ -201,7 +199,7 @@ python3 manage.py migrate
 - **Auto-refresh:** 60 seconds
 - **Interactive Charts:** Plotly integration
 
-## 📈 Performance
+## Performance
 
 - **Database:** Optimized queries with Django ORM
 - **API:** RESTful endpoints with JSON responses
@@ -209,7 +207,7 @@ python3 manage.py migrate
 - **Visualization:** Fast interactive Plotly charts
 - **Architecture:** Clean separation of API and dashboard
 
-## 🚀 Production Deployment
+## Production Deployment
 
 ### Environment Variables
 ```bash
@@ -229,19 +227,11 @@ export ALLOWED_HOSTS="your-domain.com"
 # Streamlit handles all frontend assets
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Make changes
-4. Test thoroughly
-5. Submit pull request
-
-## 📄 License
+## License
 
 This project is licensed under the MIT License.
 
-## 📞 Support
+## Support
 
 For issues and questions:
 - Check Django API logs: `tail -f django.log`
@@ -250,5 +240,3 @@ For issues and questions:
 - Ensure both servers are running on ports 8000 & 8501
 
 ---
-
-**Built with ❤️ using Django + Streamlit**
