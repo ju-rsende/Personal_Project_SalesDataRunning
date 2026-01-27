@@ -77,7 +77,7 @@ def main():
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("🏭 Top Suppliers by Cost")
+        st.subheader("Top Suppliers by Cost")
         if suppliers_data:
             df_suppliers = pd.DataFrame(list(suppliers_data.items()), columns=['Country', 'Total Cost'])
             fig = px.bar(
@@ -91,7 +91,7 @@ def main():
             st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        st.subheader("🌍 Top Clients by Revenue")
+        st.subheader("Top Clients by Revenue")
         if clients_data:
             df_clients = pd.DataFrame(list(clients_data.items()), columns=['Country', 'Total Revenue'])
             fig = px.bar(
@@ -108,7 +108,7 @@ def main():
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("📦 Product Performance")
+        st.subheader("Product Performance")
         if products_data:
             df_products = pd.DataFrame(list(products_data.items()), columns=['Product', 'Units Sold'])
             fig = px.pie(
@@ -121,7 +121,7 @@ def main():
             st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        st.subheader("💰 Revenue vs Cost Analysis")
+        st.subheader("Revenue vs Cost Analysis")
         if suppliers_data and clients_data:
             # Create comparison chart
             countries = list(set(suppliers_data.keys()) & set(clients_data.keys()))[:8]
@@ -149,7 +149,7 @@ def main():
     
     # Data Tables
     st.markdown("---")
-    st.subheader("📋 Detailed Data")
+    st.subheader("Detailed Data")
     
     tab1, tab2, tab3 = st.tabs(["Suppliers", "Clients", "Products"])
     
@@ -175,19 +175,19 @@ def main():
 with st.sidebar:
     st.header("🔧 Controls")
     
-    if st.button("🔄 Refresh Data"):
+    if st.button("Refresh Data"):
         st.cache_data.clear()
         st.rerun()
     
     st.markdown("---")
-    st.markdown("### 📊 Dashboard Features")
+    st.markdown("### Dashboard Features")
     st.markdown("- Real-time data from Django API")
     st.markdown("- Interactive charts with Plotly")
     st.markdown("- Responsive design")
     st.markdown("- Auto-refresh capability")
     
     st.markdown("---")
-    st.markdown("### 🔗 Quick Links")
+    st.markdown("### Quick Links")
     st.markdown("[Django Admin](http://localhost:8000/admin)")
     st.markdown("[API Endpoints](http://localhost:8000/api/dashboard)")
 
