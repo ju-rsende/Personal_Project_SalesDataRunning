@@ -1,8 +1,13 @@
-django
+# Core Django and API
+django>=4.2.0
 djangorestframework==3.14.0
+django-cors-headers==4.3.1
+
+# Data processing
 pandas==2.0.3
 numpy==1.24.3
-django-cors-headers==4.3.1
-streamlit==1.28.1
-plotly==5.17.0
+
+# HTTP requests (for testing)
 requests==2.31.0
+
+# Note: Streamlit and Plotly removed - now using Power BI for visualization

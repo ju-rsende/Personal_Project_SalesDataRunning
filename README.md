@@ -1,27 +1,23 @@
-# 📊 Sales Analytics Platform
+# 📊 Sales Analytics Platform with Power BI
 
-A comprehensive sales data analytics platform built with **Django** and **Streamlit**, featuring interactive dashboards, REST APIs, and admin panel for business intelligence.
+A comprehensive sales data analytics platform built with **Django** and **Power BI**, featuring professional business intelligence dashboards, REST APIs, and admin panel.
 
 ## Features
 
-### Interactive Dashboard (Streamlit)
-- **Real-time Analytics** - Live data visualization
-- **Interactive Charts** - Bar charts, pie charts, comparison graphs
-- **Key Metrics** - Revenue, costs, product performance
-- **Responsive Design** - Works on desktop and mobile
-- **Auto-refresh** - Real-time data updates
+### Power BI Integration
+- **Professional Dashboards** - Enterprise-grade business intelligence
+- **Advanced Analytics** - AI-powered insights and forecasting
+- **Interactive Visualizations** - Drill-down, cross-filtering, and dynamic charts
+- **Mobile Optimized** - Native mobile apps and responsive design
+- **Real-time Data** - Live connections to your Django API
+- **Collaboration** - Share reports and dashboards across teams
 
-### Admin Panel (Django)
-- **Data Management** - Add, edit, delete sales records
-- **User Authentication** - Secure admin access
-- **Search & Filter** - Advanced data filtering
-- **Bulk Operations** - Import/export capabilities
-
-### REST API (Django REST Framework)
-- **RESTful Endpoints** - Clean API architecture
-- **JSON Responses** - Standard data format
-- **CORS Enabled** - Cross-origin requests
-- **Scalable** - Production-ready
+### Django API Backend
+- **Power BI Optimized Endpoints** - Tabular data structures for BI consumption
+- **RESTful Architecture** - Clean, scalable API design
+- **Real-time Data** - Live data access for Power BI
+- **Admin Panel** - Data management interface
+- **Authentication** - Secure admin access
 
 ## Project Structure
 
@@ -29,17 +25,17 @@ A comprehensive sales data analytics platform built with **Django** and **Stream
 Sales Data Running Project/
 ├── analytics_app/              # Django app
 │   ├── models.py              # Database models
-│   ├── views.py               # API views
+│   ├── views.py               # API views (Power BI optimized)
 │   ├── admin.py               # Admin configuration
 │   ├── urls.py                # URL routing
 │   └── management/commands/    # Custom commands
 ├── sales_analytics/           # Django project
 │   ├── settings.py            # Project settings
 │   └── urls.py                # Main URL config
-├── streamlit_dashboard.py     # Streamlit dashboard
 ├── manage.py                  # Django management
 ├── start_platform.sh          # Startup script
 ├── requirements_django.txt    # Dependencies
+├── POWER_BI_SETUP.md         # Power BI integration guide
 └── db.sqlite3                # SQLite database
 ```
 
@@ -71,46 +67,39 @@ python3 manage.py import_csv "path/to/your/sales_data.csv"
 
 ## Running the Platform
 
-### Option 1: Quick Start (Recommended)
+### Quick Start
 ```bash
 ./start_platform.sh
 ```
 
-### Option 2: Manual Start
+### Manual Start
 ```bash
-# Terminal 1: Start Django API
+# Start Django API server
 python3 manage.py runserver 8000
-
-# Terminal 2: Start Streamlit Dashboard
-python3 -m streamlit run streamlit_dashboard.py --server.port 8501
 ```
 
 ## Access Points
 
 | Service | URL | Description |
 |---------|-----|-------------|
-| **Streamlit Dashboard** | http://localhost:8501 | Main analytics dashboard |
 | **Django Admin** | http://localhost:8000/admin | Data management panel |
-| **REST API** | http://localhost:8000/api | REST API endpoints |
+| **Power BI Endpoints** | http://localhost:8000/api/powerbi/ | Power BI data sources |
+| **Legacy API** | http://localhost:8000/api | Original REST API endpoints |
 
-## Dashboard Features
+## Power BI Integration
 
-### Key Metrics
-- Total sales records
-- Total revenue
-- Number of countries
-- Product types count
+See [POWER_BI_SETUP.md](POWER_BI_SETUP.md) for complete Power BI setup instructions.
 
-### Interactive Charts
-- **Top Suppliers** - Countries with highest costs
-- **Top Clients** - Countries with highest revenue
-- **Product Performance** - Units sold by product type
-- **Revenue vs Cost** - Comparative analysis
+### Power BI Endpoints
 
-### Data Tables
-- Detailed supplier information
-- Client revenue breakdown
-- Product performance metrics
+| Endpoint | Purpose | Key Fields |
+|----------|---------|------------|
+| `/api/powerbi/sales-summary/` | Main fact table | All sales data with calculated metrics |
+| `/api/powerbi/country-metrics/` | Country analysis | Regional performance data |
+| `/api/powerbi/product-metrics/` | Product analysis | Product performance metrics |
+| `/api/powerbi/monthly-trends/` | Time series | Monthly trends and patterns |
+| `/api/powerbi/sales-channel-metrics/` | Channel analysis | Sales channel performance |
+| `/api/powerbi/regional-summary/` | Regional overview | High-level regional metrics |
 
 ## API Endpoints
 
