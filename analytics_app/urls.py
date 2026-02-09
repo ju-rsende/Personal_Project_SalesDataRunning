@@ -2,13 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Legacy Streamlit endpoints
-    path('suppliers/', views.suppliers_analysis, name='suppliers'),
-    path('clients/', views.clients_analysis, name='clients'),
-    path('products/', views.products_analysis, name='products'),
-    path('dashboard/', views.dashboard_data, name='dashboard_data'),
-    
-    # Power BI optimized endpoints
     path('powerbi/sales-summary/', views.powerbi_sales_summary, name='powerbi_sales_summary'),
     path('powerbi/country-metrics/', views.powerbi_country_metrics, name='powerbi_country_metrics'),
     path('powerbi/product-metrics/', views.powerbi_product_metrics, name='powerbi_product_metrics'),

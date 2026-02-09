@@ -1,31 +1,21 @@
-# 📊 Sales Analytics Platform with Power BI
+# 📊 Sales Analytics API for Power BI
 
-A comprehensive sales data analytics platform built with **Django** and **Power BI**, featuring professional business intelligence dashboards, REST APIs, and admin panel.
+Django REST API backend optimized for Power BI dashboards, providing clean data endpoints for business intelligence and analytics.
 
 ## Features
 
-### Power BI Integration
-- **Professional Dashboards** - Enterprise-grade business intelligence
-- **Advanced Analytics** - AI-powered insights and forecasting
-- **Interactive Visualizations** - Drill-down, cross-filtering, and dynamic charts
-- **Mobile Optimized** - Native mobile apps and responsive design
-- **Real-time Data** - Live connections to your Django API
-- **Collaboration** - Share reports and dashboards across teams
-
-### Django API Backend
-- **Power BI Optimized Endpoints** - Tabular data structures for BI consumption
-- **RESTful Architecture** - Clean, scalable API design
-- **Real-time Data** - Live data access for Power BI
+- **Power BI Optimized Endpoints** - Pre-aggregated data for fast BI consumption
+- **RESTful API** - Clean, scalable architecture
 - **Admin Panel** - Data management interface
-- **Authentication** - Secure admin access
+- **Multiple Analysis Views** - Country, product, channel, time-based metrics
 
 ## Project Structure
 
 ```
-Sales Data Running Project/
+Personal_Project_SalesDataRunning/
 ├── analytics_app/              # Django app
 │   ├── models.py              # Database models
-│   ├── views.py               # API views (Power BI optimized)
+│   ├── views.py               # API views
 │   ├── admin.py               # Admin configuration
 │   ├── urls.py                # URL routing
 │   └── management/commands/    # Custom commands
@@ -35,7 +25,7 @@ Sales Data Running Project/
 ├── manage.py                  # Django management
 ├── start_platform.sh          # Startup script
 ├── requirements_django.txt    # Dependencies
-├── POWER_BI_SETUP.md         # Power BI integration guide
+├── POWER_BI_SETUP.md         # Power BI guide
 └── db.sqlite3                # SQLite database
 ```
 
@@ -47,22 +37,20 @@ Sales Data Running Project/
 
 ### Setup
 ```bash
-# Clone/navigate to project
-cd "Sales Data Running Project"
+# Navigate to project
+cd Personal_Project_SalesDataRunning
 
 # Install dependencies
 pip install -r requirements_django.txt
 
-# Run database migrations
-python3 manage.py migrate
-python3 manage.py makemigrations analytics_app
+# Run migrations
 python3 manage.py migrate
 
 # Create admin user
 python3 manage.py createsuperuser
 
-# Import CSV data (if needed)
-python3 manage.py import_csv "path/to/your/sales_data.csv"
+# Import CSV data (optional)
+python3 manage.py import_csv "path/to/sales_data.csv"
 ```
 
 ## Running the Platform
@@ -80,11 +68,10 @@ python3 manage.py runserver 8000
 
 ## Access Points
 
-| Service | URL | Description |
-|---------|-----|-------------|
-| **Django Admin** | http://localhost:8000/admin | Data management panel |
-| **Power BI Endpoints** | http://localhost:8000/api/powerbi/ | Power BI data sources |
-| **Legacy API** | http://localhost:8000/api | Original REST API endpoints |
+| Service | URL |
+|---------|-----|
+| **Django Admin** | http://localhost:8000/admin |
+| **Power BI Endpoints** | http://localhost:8000/api/powerbi/ |
 
 ## Power BI Integration
 
@@ -103,30 +90,23 @@ See [POWER_BI_SETUP.md](POWER_BI_SETUP.md) for complete Power BI setup instructi
 
 ## API Endpoints
 
+All endpoints are optimized for Power BI consumption:
+
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/suppliers/` | GET | Top suppliers by cost |
-| `/api/clients/` | GET | Top clients by revenue |
-| `/api/products/` | GET | Product performance data |
-| `/api/dashboard/` | GET | Combined dashboard data |
+| `/api/powerbi/sales-summary/` | GET | All sales records with metrics |
+| `/api/powerbi/country-metrics/` | GET | Country-level aggregations |
+| `/api/powerbi/product-metrics/` | GET | Product performance data |
+| `/api/powerbi/monthly-trends/` | GET | Time series analysis |
+| `/api/powerbi/sales-channel-metrics/` | GET | Channel performance |
+| `/api/powerbi/regional-summary/` | GET | Regional overview |
 
-### Example API Response
-```json
-{
-  "suppliers": {"Honduras": 4726597.96, "Turkmenistan": 4554777.8},
-  "clients": {"Germany": 5234567.89, "France": 4567890.12},
-  "products": {"Cosmetics": 15000, "Clothes": 12000},
-  "total_records": 100,
-  "total_revenue": 50000000.00
-}
+## Admin Access
+
+Create your admin user during setup:
+```bash
+python3 manage.py createsuperuser
 ```
-
-## Admin Credentials
-
-**Default Admin User:**
-- **Username:** `admin`
-- **Password:** `password`
-- **Email:** `admin@example.com`
 
 ## Data Management
 
@@ -161,40 +141,21 @@ python3 manage.py migrate
 
 ## Dependencies
 
-### Core Frameworks
-- **Django 4.2+** - Web framework & API
+- **Django 4.2+** - Web framework & ORM
 - **Django REST Framework** - API endpoints
-- **Streamlit** - Interactive dashboard
-
-### Data & Visualization
-- **Pandas** - Data manipulation
-- **NumPy** - Numerical computing
-- **Plotly** - Interactive charts
-- **Requests** - HTTP client
-
-### Additional
-- **Django CORS Headers** - CORS handling
+- **Django CORS Headers** - Cross-origin requests
 
 ## Configuration
 
-### Django Settings
 - **Database:** SQLite (development)
-- **Debug Mode:** Enabled (development)
-- **CORS:** Enabled for all origins
-- **API Only:** No templates or static files
-
-### Streamlit Config
-- **Port:** 8501
-- **Auto-refresh:** 60 seconds
-- **Interactive Charts:** Plotly integration
+- **Debug Mode:** Enabled (development only)
+- **CORS:** Enabled for Power BI access
 
 ## Performance
 
-- **Database:** Optimized queries with Django ORM
-- **API:** RESTful endpoints with JSON responses
-- **Caching:** Streamlit data caching (60s TTL)
-- **Visualization:** Fast interactive Plotly charts
-- **Architecture:** Clean separation of API and dashboard
+- **Optimized Queries** - Django ORM with aggregations
+- **Pre-calculated Metrics** - Reduced Power BI processing
+- **Clean JSON** - Fast API responses
 
 ## Production Deployment
 
@@ -222,10 +183,9 @@ This project is licensed under the MIT License.
 
 ## Support
 
-For issues and questions:
-- Check Django API logs: `tail -f django.log`
-- Review Streamlit dashboard: `tail -f streamlit.log`
-- Verify API endpoints: http://localhost:8000/api/dashboard
-- Ensure both servers are running on ports 8000 & 8501
+For issues:
+- Check logs: `python3 manage.py runserver`
+- Verify endpoints: http://localhost:8000/api/powerbi/sales-summary/
+- Admin panel: http://localhost:8000/admin
 
 ---

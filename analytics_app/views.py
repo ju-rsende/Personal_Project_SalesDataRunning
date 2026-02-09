@@ -1,81 +1,41 @@
 from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from django.db.models import Sum, Avg, Count, Q
-from django.db.models.functions import TruncMonth, TruncYear
+from rest_framework.pagination import PageNumberPagination
+from django.db.models import Sum, Avg, Count
+from django.db.models.functions import TruncMonth
 from .models import SalesRecord
-import pandas as pd
-from datetime import datetime, timedelta
-
-@api_view(['GET'])
-def suppliers_analysis(request):
-    data = SalesRecord.objects.values('country').annotate(
-        total_cost=Sum('total_cost')
-    ).order_by('-total_cost')[:10]
-    return Response({item['country']: float(item['total_cost']) for item in data})
-
-@api_view(['GET'])
-def clients_analysis(request):
-    data = SalesRecord.objects.values('country').annotate(
-        total_revenue=Sum('total_revenue')
-    ).order_by('-total_revenue')[:10]
-    return Response({item['country']: float(item['total_revenue']) for item in data})
-
-@api_view(['GET'])
-def products_analysis(request):
-    data = SalesRecord.objects.values('item_type').annotate(
-        units_sold=Sum('units_sold')
-    ).order_by('-units_sold')
-    return Response({item['item_type']: item['units_sold'] for item in data})
-
-@api_view(['GET'])
-def dashboard_data(request):
-    suppliers = SalesRecord.objects.values('country').annotate(
-        total_cost=Sum('total_cost')).order_by('-total_cost')[:5]
-    clients = SalesRecord.objects.values('country').annotate(
-        total_revenue=Sum('total_revenue')).order_by('-total_revenue')[:5]
-    products = SalesRecord.objects.values('item_type').annotate(
-        units_sold=Sum('units_sold')).order_by('-units_sold')[:5]
-    
-    return Response({
-        'suppliers': {item['country']: float(item['total_cost']) for item in suppliers},
-        'clients': {item['country']: float(item['total_revenue']) for item in clients},
-        'products': {item['item_type']: item['units_sold'] for item in products},
-        'total_records': SalesRecord.objects.count(),
-        'total_revenue': float(SalesRecord.objects.aggregate(Sum('total_revenue'))['total_revenue__sum'] or 0)
-    })
-
-# Power BI Optimized Endpoints
 
 @api_view(['GET'])
 def powerbi_sales_summary(request):
     """Main sales data table for Power BI - all records with key metrics"""
-    records = SalesRecord.objects.all().values(
-        'order_id', 'region', 'country', 'item_type', 'sales_channel',
-        'order_priority', 'order_date', 'ship_date', 'units_sold',
-        'unit_price', 'unit_cost', 'total_revenue', 'total_cost', 'total_profit'
-    )
+    queryset = SalesRecord.objects.all()
+    
+    paginator = PageNumberPagination()
+    paginator.page_size = 1000
+    paginated_records = paginator.paginate_queryset(queryset, request)
     
     data = []
-    for record in records:
+    for record in paginated_records:
         data.append({
-            'OrderID': record['order_id'],
-            'Region': record['region'],
-            'Country': record['country'],
-            'ItemType': record['item_type'],
-            'SalesChannel': record['sales_channel'],
-            'OrderPriority': record['order_priority'],
-            'OrderDate': record['order_date'].isoformat(),
-            'ShipDate': record['ship_date'].isoformat(),
-            'UnitsSold': record['units_sold'],
-            'UnitPrice': float(record['unit_price']),
-            'UnitCost': float(record['unit_cost']),
-            'TotalRevenue': float(record['total_revenue']),
-            'TotalCost': float(record['total_cost']),
-            'TotalProfit': float(record['total_profit']),
-            'ProfitMargin': float(record['total_profit'] / record['total_revenue'] * 100) if record['total_revenue'] > 0 else 0
+            'OrderID': record.order_id,
+            'Region': record.region,
+            'Country': record.country,
+            'ItemType': record.item_type,
+            'SalesChannel': record.sales_channel,
+            'OrderPriority': record.order_priority,
+            'OrderDate': record.order_date.isoformat(),
+            'ShipDate': record.ship_date.isoformat(),
+            'UnitsSold': record.units_sold,
+            'UnitPrice': float(record.unit_price),
+            'UnitCost': float(record.unit_cost),
+            'TotalRevenue': float(record.total_revenue),
+            'TotalCost': float(record.total_cost),
+            'TotalProfit': float(record.total_profit),
+            'ProfitMargin': round(float(record.total_profit / record.total_revenue * 100), 2) if record.total_revenue and record.total_revenue > 0 else 0
         })
     
-    return Response(data)
+    return paginator.get_paginated_response(data)
 
 @api_view(['GET'])
 def powerbi_country_metrics(request):
@@ -100,7 +60,7 @@ def powerbi_country_metrics(request):
             'TotalProfit': float(item['total_profit']),
             'TotalUnits': item['total_units'],
             'AvgOrderValue': float(item['avg_order_value']),
-            'ProfitMargin': float(item['total_profit'] / item['total_revenue'] * 100) if item['total_revenue'] > 0 else 0
+            'ProfitMargin': round(float(item['total_profit'] / item['total_revenue'] * 100), 2) if item['total_revenue'] and item['total_revenue'] > 0 else 0
         })
     
     return Response(result)
@@ -129,7 +89,7 @@ def powerbi_product_metrics(request):
             'TotalUnits': item['total_units'],
             'AvgUnitPrice': float(item['avg_unit_price']),
             'AvgUnitCost': float(item['avg_unit_cost']),
-            'ProfitMargin': float(item['total_profit'] / item['total_revenue'] * 100) if item['total_revenue'] > 0 else 0
+            'ProfitMargin': round(float(item['total_profit'] / item['total_revenue'] * 100), 2) if item['total_revenue'] and item['total_revenue'] > 0 else 0
         })
     
     return Response(result)
@@ -159,7 +119,7 @@ def powerbi_monthly_trends(request):
             'TotalCost': float(item['total_cost']),
             'TotalProfit': float(item['total_profit']),
             'TotalUnits': item['total_units'],
-            'ProfitMargin': float(item['total_profit'] / item['total_revenue'] * 100) if item['total_revenue'] > 0 else 0
+            'ProfitMargin': round(float(item['total_profit'] / item['total_revenue'] * 100), 2) if item['total_revenue'] and item['total_revenue'] > 0 else 0
         })
     
     return Response(result)
@@ -187,7 +147,7 @@ def powerbi_sales_channel_metrics(request):
             'TotalProfit': float(item['total_profit']),
             'TotalUnits': item['total_units'],
             'AvgOrderValue': float(item['avg_order_value']),
-            'ProfitMargin': float(item['total_profit'] / item['total_revenue'] * 100) if item['total_revenue'] > 0 else 0
+            'ProfitMargin': round(float(item['total_profit'] / item['total_revenue'] * 100), 2) if item['total_revenue'] and item['total_revenue'] > 0 else 0
         })
     
     return Response(result)
@@ -216,7 +176,7 @@ def powerbi_regional_summary(request):
             'TotalProfit': float(item['total_profit']),
             'TotalUnits': item['total_units'],
             'AvgOrderValue': float(item['avg_order_value']),
-            'ProfitMargin': float(item['total_profit'] / item['total_revenue'] * 100) if item['total_revenue'] > 0 else 0
+            'ProfitMargin': round(float(item['total_profit'] / item['total_revenue'] * 100), 2) if item['total_revenue'] and item['total_revenue'] > 0 else 0
         })
     
     return Response(result)

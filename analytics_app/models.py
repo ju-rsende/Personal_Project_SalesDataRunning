@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 class SalesRecord(models.Model):
     region = models.CharField(max_length=100)
@@ -22,6 +21,13 @@ class SalesRecord(models.Model):
     
     class Meta:
         ordering = ['-order_date']
+        indexes = [
+            models.Index(fields=['order_date']),
+            models.Index(fields=['country']),
+            models.Index(fields=['item_type']),
+            models.Index(fields=['sales_channel']),
+            models.Index(fields=['region']),
+        ]
     
     def __str__(self):
         return f"{self.order_id} - {self.item_type}"
